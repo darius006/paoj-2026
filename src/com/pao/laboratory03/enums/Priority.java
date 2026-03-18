@@ -1,0 +1,42 @@
+package com.pao.laboratory03.enums;
+
+public enum Priority {
+  LOW(1, "green") {
+    public String getEmoji() {
+      return "🟢";
+    }
+  },
+  MEDIUM(2, "yellow") {
+    public String getEmoji() {
+      return "🟡";
+    }
+  },
+  HIGH(3, "orange") {
+    public String getEmoji() {
+      return "🟠";
+    }
+  },
+  CRITICAL(4, "red") {
+    public String getEmoji() {
+      return "🔴";
+    }
+  };
+
+  private int level;
+  private String color;
+
+  private Priority(int level, String color) {
+    this.level = level;
+    this.color = color;
+  }
+
+  public int getLevel() {
+    return this.level;
+  }
+
+  public String getColor() {
+    return this.color;
+  }
+
+  public abstract String getEmoji();
+}

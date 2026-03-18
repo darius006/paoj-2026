@@ -1,5 +1,7 @@
 package com.pao.laboratory03.enums;
 
+
+
 /**
  * Exercițiul 2 — Enum-uri
  *
@@ -49,8 +51,36 @@ package com.pao.laboratory03.enums;
  */
 public class Main {
     public static void main(String[] args) {
-        // TODO: implementează pașii de mai sus
-        // Hint: creează mai întâi fișierul Priority.java în acest pachet
+        for (var value : Priority.values()) {
+            System.out.println(value.getEmoji() + " " + value.name() +  " (" + value.getLevel() + ", " + value.getColor() + ")");
+        }
+        var prio = Priority.MEDIUM;
+        switch(prio) {
+            case LOW:
+                System.out.println("Prioritate mica.");
+                break;
+            case MEDIUM:
+                System.out.println("Prioritate medie.");
+                break;
+            case HIGH:
+                System.out.println("Prioritate mare.");
+                break;
+            case CRITICAL:
+                System.out.println("Prioritate maxima.");
+                break;
+            default:
+                break;
+        }
+        System.out.println(Priority.valueOf("HIGH"));
+        var prio2 = Priority.MEDIUM;
+        if (prio == prio2) {
+            System.out.println("îs egale");
+        }
+        System.out.println(Priority.LOW.name() + " " +  Priority.LOW.ordinal());
+        System.out.println(Priority.MEDIUM.name() + " " +  Priority.MEDIUM.ordinal());
+        System.out.println(Priority.HIGH.name() + " " +  Priority.HIGH.ordinal());
+        System.out.println(Priority.CRITICAL.name() + " " +  Priority.CRITICAL.ordinal());
+
     }
 }
 

@@ -1,5 +1,8 @@
 package com.pao.laboratory03.exceptions;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Exercițiul 3 — Excepții (checked, unchecked, custom)
  *
@@ -59,9 +62,83 @@ package com.pao.laboratory03.exceptions;
  * Metoda process() a aruncat: Vârsta 999 nu este validă (0-150)
  */
 public class Main {
+    public static void riskyMethod() {
+        throw new NullPointerException();
+    }
+    public static void validateAge(int age) {
+        if (age < 0 || age > 150) {
+            throw new InvalidAgeException();
+        }
+    }
+    public static void addToList(List<String> list, String name) {
+        for (String el : list) {
+            if (name == el) {
+                throw new DuplicateEntryException();
+            }
+        }
+        list.add(name);
+    }
+    public static void process(int age) throws InvalidAgeException {
+        if (age < 0 || age > 150) {
+            throw new InvalidAgeException();
+        }
+    }
     public static void main(String[] args) {
         // TODO: implementează pașii de mai sus
         // Hint: creează mai întâi InvalidAgeException.java și DuplicateEntryException.java
+        try {
+            riskyMethod();
+        }
+        catch (NullPointerException exc) {
+            System.out.println(exc.getMessage());
+        }
+        finally {
+            System.out.println("Acest bloc se executa mereu.");
+        }
+
+        try {
+            validateAge(151);
+        }
+        catch (InvalidAgeException exc) {
+            System.out.println(exc.getMessage());
+        }
+        List<String> l = new ArrayList<String>();
+        try {
+            addToList(l, "string");
+            addToList(l, "string");
+        }
+        catch (DuplicateEntryException exc) {
+            System.out.println(exc.getMessage());
+        }
+
+        
+        try {
+            addToList(l, "string");
+        }
+        catch (DuplicateEntryException | InvalidAgeException exc) {
+            System.out.println(exc.getMessage());
+        }
+
+        
+        // VSCode nu ma lasa sa adaug blocul unreachable cu InvalidAgeException
+        // deci l-am comentat
+        try {
+            validateAge(151);
+        }
+        catch (RuntimeException exc) {
+            System.out.println("Exceptie runtime");
+        }
+        // catch (InvalidAgeException exc) {
+        //     // acest cod nu va fi executat niciodata
+        //     System.out.println(exc.getMessage());
+        // }
+
+        try {
+            process(-1);
+        }
+        catch (InvalidAgeException exc) {
+            System.out.println("process exception");
+        }
     }
 }
 

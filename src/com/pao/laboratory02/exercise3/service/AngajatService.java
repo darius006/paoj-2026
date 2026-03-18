@@ -1,6 +1,7 @@
 package com.pao.laboratory02.exercise3.service;
 
 import com.pao.laboratory02.exercise3.model.Angajat;
+import com.pao.laboratory02.exercise3.model.Manager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,28 @@ public class AngajatService {
 
     /** TODO: angajati.add(a); println("Angajat adăugat: " + a.getName()); */
     public void addAngajat(Angajat a) {
-        // TODO
+        angajati.add(a);
+        System.out.println("Angajat adaugat: " + a.getName());
     }
 
     /** TODO: dacă goală → mesaj; altfel parcurge cu index și afișează (i+1) + ". " + angajat */
     public void listAll() {
-        // TODO
+        if (angajati.isEmpty()) {
+            System.out.println("Nu sunt angajati.");
+        }
+        else {
+            for (int i = 0; i < angajati.size(); ++i) {
+                System.out.println(String.valueOf(i + 1) + ". " + angajati.get(i).getName());
+            }
+        }
     }
 
     /** TODO: parcurge lista, sumează a.salariuTotal(), returnează totalul. */
     public double totalSalarii() {
-        return 0; // TODO
+        int s = 0;
+        for (Angajat ang : angajati) {
+            s += ang.salariuTotal();
+        }
+        return s;
     }
 }

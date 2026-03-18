@@ -1,6 +1,10 @@
 package com.pao.laboratory03.exercise;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import com.pao.laboratory03.exercise.model.StudentService;
+import com.pao.laboratory03.exercise.model.Subject;
 
 /**
  * Exercițiul 4 (Integrator) — Sistem de gestiune studenți + note
@@ -93,7 +97,7 @@ public class Main {
                         String name = scanner.nextLine().trim();
                         System.out.print("Vârsta: ");
                         int age = Integer.parseInt(scanner.nextLine().trim());
-                        // TODO: apelează service.addStudent(name, age)
+                        StudentService.getInstance().addStudent(name, age);
                         System.out.println("Student adăugat cu succes!");
                         break;
 
@@ -104,21 +108,26 @@ public class Main {
                         String subjectStr = scanner.nextLine().trim().toUpperCase();
                         System.out.print("Nota (1-10): ");
                         double grade = Double.parseDouble(scanner.nextLine().trim());
-                        // TODO: convertește subjectStr în Subject cu valueOf()
-                        // TODO: apelează service.addGrade(studentName, subject, grade)
+
+                        Subject subject = Subject.valueOf(subjectStr);
+                        StudentService.getInstance().addGrade(studentName, subject, grade);
+
                         System.out.println("Notă adăugată!");
                         break;
 
                     case "3":
-                        // TODO: apelează service.printAllStudents()
+                        StudentService.getInstance().printAllStudents();
                         break;
 
                     case "4":
-                        // TODO: apelează service.printTopStudents()
+                        StudentService.getInstance().printTopStudents();
                         break;
 
                     case "5":
-                        // TODO: apelează service.getAveragePerSubject() și afișează
+                        Map<Subject, Double> map = new HashMap<Subject, Double>(StudentService.getInstance().getAveragePerSubject());
+                        for (var entry : map.entrySet()) {
+                            System.out.println(String.format("%s -> %f", entry.getKey(), entry.getValue()));
+                        }
                         break;
 
                     case "0":
