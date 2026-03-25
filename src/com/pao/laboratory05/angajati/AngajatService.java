@@ -2,8 +2,6 @@ package com.pao.laboratory05.angajati;
 
 import java.util.Arrays;
 
-import com.pao.laboratory05.biblioteca.Carte;
-
 public class AngajatService {
   public static final AngajatService INSTANCE = new AngajatService();
   private Angajat[] angajati;
