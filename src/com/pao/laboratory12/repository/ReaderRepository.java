@@ -81,6 +81,17 @@ public class ReaderRepository implements Repository<Reader, Long> {
 
     @Override
     public void delete(Long id) throws SQLException {
+        String sql1 = "DELETE FROM loan WHERE reader_id = ?";
+
+        try (PreparedStatement ps1 = getConn().prepareStatement(sql1)) {
+            ps1.setLong(1, id);
+            ps1.executeUpdate();
+        }
+        catch (IOException e) {
+            throw new SQLException(e);
+        }
+
+
         String sql = "DELETE FROM reader WHERE id = ?";
         try (PreparedStatement ps = getConn().prepareStatement(sql)) {
             ps.setLong(1, id);

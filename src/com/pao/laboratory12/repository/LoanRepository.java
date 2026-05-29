@@ -87,6 +87,7 @@ public class LoanRepository implements Repository<Loan, Long> {
 
     @Override
     public void delete(Long id) throws SQLException {
+
         String sql = "DELETE FROM loan WHERE id = ?";
         try (PreparedStatement ps = getConn().prepareStatement(sql)) {
             ps.setLong(1, id);
