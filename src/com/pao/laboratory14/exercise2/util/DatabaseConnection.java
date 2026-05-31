@@ -20,15 +20,18 @@ public class DatabaseConnection {
 
     private DatabaseConnection() throws IOException, SQLException {
         Properties props = new Properties();
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties")) {
-            if (is == null) {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties");
+        if (is == null) {
+            is = getClass().getClassLoader().getResourceAsStream("com/pao/laboratory14/exercise2/resources/db.properties");
+        }
+        try (InputStream stream = is) {
+            if (stream == null) {
                 throw new IOException(
                     "db.properties nu a fost gasit pe classpath. " +
-                    "Marcheaza 'exercise2/resources/' ca Resources Root in IntelliJ: " +
-                    "clic dreapta -> Mark Directory as -> Resources Root"
+                    "În VS Code, asigură-te că directorul 'src/com/pao/laboratory14/exercise2/resources' este adăugat la classpath sau mută db.properties în directorul de resurse al proiectului."
                 );
             }
-            props.load(is);
+            props.load(stream);
         }
         String url      = props.getProperty("db.url");
         String user     = props.getProperty("db.user", "");
