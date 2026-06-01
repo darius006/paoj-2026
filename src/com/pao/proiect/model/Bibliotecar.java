@@ -1,27 +1,22 @@
 package com.pao.proiect.model;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class Bibliotecar extends Angajat {
-  private List<String> subiecteExpertiza = new ArrayList<String>();
-  private List<String> limbiVorbite = new ArrayList<String>();
+  private int nrLimbiVorbite;
 
-  public Bibliotecar(int id, String nume, List<String> subiecte, List<String> limbi) {
+  public Bibliotecar(int id, String nume, int nrLimbiVorbite) {
     super(id, nume);
-    this.subiecteExpertiza = subiecte;
-    this.limbiVorbite = limbi;
+    this.nrLimbiVorbite = nrLimbiVorbite;
   }
 
   public int getSalariuNet() {
-    return 2950;
+    return 2950 + (nrLimbiVorbite - 1) * 30;
   }
 
   @Override
   public String toString() {
     return super.toString() + String.format(
-      "\nBibliotecar, Nr. subiecte expertiza: %d, Nr limbi vorbite: %d\n",
-      subiecteExpertiza.size(), limbiVorbite.size()
+      "\nBibliotecar, Nr limbi vorbite: %d\n",
+      nrLimbiVorbite
     );
   }
 }

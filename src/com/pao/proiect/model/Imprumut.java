@@ -3,14 +3,14 @@ package com.pao.proiect.model;
 public class Imprumut {
   private ISBN isbn;
   private String email;
-  private String dataInprumut;
+  private String dataImprumut;
   private String dataPredare;
   private String dataLimitaPredare;
 
   public Imprumut(ISBN isbn, String email, String dataImprumut, String dataPredare, String dataLimitaPredare) {
     this.isbn = isbn;
     this.email = email;
-    this.dataInprumut = dataImprumut;
+    this.dataImprumut = dataImprumut;
     this.dataPredare = dataPredare;
     this.dataLimitaPredare = dataLimitaPredare;
   }
@@ -40,7 +40,7 @@ public class Imprumut {
   public String toString() {
     return String.format(
       "Imprumut{isbn='%s', email='%s', dataImprumut='%s', dataPredare='%s', dataLimitaPredare='%s'}",
-      isbn, email, dataInprumut, dataPredare, dataLimitaPredare
+      isbn, email, dataImprumut, dataPredare, dataLimitaPredare
     );
   }
 

@@ -51,9 +51,7 @@ public class Main {
     String titlu = scanner.nextLine();
     System.out.print("Introdu numele complet al autorului: ");
     String numeAutor = scanner.nextLine();
-    System.out.print("Introdu anul de debut al autorului: ");
-    int anDebut = scanner.nextInt();
-    Autor autor = new Autor(numeAutor, anDebut);
+    Autor autor = new Autor(numeAutor);
     scanner.nextLine();
     System.out.print("Introdu numele sectiunii: ");
     String numeSectiune = scanner.nextLine();
@@ -255,23 +253,10 @@ public class Main {
     System.out.print("Introdu numele angajatului: ");
     String nume = scanner.nextLine();
     if (tip.equals("b")) {
-      List<String> specializari = new ArrayList<String>();
-      List<String> limbi = new ArrayList<String>();
       System.out.print("Introdu nr. de limbi vorbite: ");
-      int nr = scanner.nextInt();
+      int nrLimbi = scanner.nextInt();
       scanner.nextLine();
-      System.out.println("Introdu limbile pe linii separate: ");
-      for (int i = 0; i < nr; ++i) {
-        limbi.add(scanner.nextLine());
-      }
-      System.out.print("Introdu nr. de specializari: ");
-      nr = scanner.nextInt();
-      scanner.nextLine();
-      System.out.println("Introdu specializarile pe linii separate: ");
-      for (int i = 0; i < nr; ++i) {
-        specializari.add(scanner.nextLine());
-      }
-      as.addAngajat(new Bibliotecar(id, nume, specializari, limbi));
+      as.addAngajat(new Bibliotecar(id, nume, nrLimbi));
     }
     else if (tip.equals("pr")) {
       System.out.println("Introdu numele sectiunii la care este asignat: ");
