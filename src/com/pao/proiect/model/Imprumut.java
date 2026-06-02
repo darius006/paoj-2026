@@ -27,6 +27,10 @@ public class Imprumut {
   public void setDataPredare(String dataPredare) {
     this.dataPredare = dataPredare;
   }
+  
+  public String getDataImprumut() {
+    return dataImprumut;
+  }
 
   public String getDataPredare() {
     return dataPredare;

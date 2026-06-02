@@ -47,6 +47,10 @@ public class Carte implements Comparable {
     return nrExemplare;
   }
 
+  public Autor getAutor() {
+    return autor;
+  }
+
   @Override
   public String toString() {
     return String.format(

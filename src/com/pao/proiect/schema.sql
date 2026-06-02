@@ -6,22 +6,22 @@ DROP TABLE IF EXISTS personal_raft;
 DROP TABLE IF EXISTS angajat;
 
 CREATE TABLE carte (
-  isbn VARCHAR(20) PRIMARY KEY,
-  titlu VARCHAR(300) NOT NULL,
-  nume_autor VARCHAR(200) NOT NULL,
-  nume_sectiune VARCHAR(200) NOT NULL,
-  rating_varsta TINYINT UNSIGNED NOT NULL,
-  nr_exemplare BIGINT NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  isbn TEXT PRIMARY KEY,
+  titlu TEXT NOT NULL,
+  nume_autor TEXT NOT NULL,
+  nume_sectiune TEXT NOT NULL,
+  rating_varsta INTEGER UNSIGNED NOT NULL,
+  nr_exemplare INTEGER NOT NULL 
+) 
 
 CREATE TABLE cititor (
-  email VARCHAR(200) PRIMARY KEY,
-  nume_complet VARCHAR(200)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  email TEXT PRIMARY KEY,
+  nume_complet TEXT
+) 
 
 CREATE TABLE imprumut (
-  isbn VARCHAR(20),
-  email VARCHAR(200),
+  isbn TEXT,
+  email TEXT,
   data_imprumut DATE,
   data_predare DATE,
   data_limita_predare DATE,
@@ -34,28 +34,28 @@ CREATE TABLE imprumut (
   FOREIGN KEY (email)
     REFERENCES cititor(email)
 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) 
 
 CREATE TABLE angajat (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  nume_complet VARCHAR(200)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  id INTEGER  PRIMARY KEY AUTOINCREMENT,
+  nume_complet TEXT
+) 
 
 CREATE TABLE bibliotecar (
-  id BIGINT PRIMARY KEY,
-  nr_limbi_vorbite BIGINT
+  id INTEGER PRIMARY KEY,
+  nr_limbi_vorbite INTEGER
 
   FOREIGN KEY (id)
     REFERENCES angajat(id)
   
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) 
 
 CREATE TABLE personal_raft (
-  id BIGINT PRIMARY KEY,
-  nume_sectiune VARCHAR(200)
+  id INTEGER PRIMARY KEY,
+  nume_sectiune TEXT
 
   FOREIGN KEY (id)
     REFERENCES angajat(id)
 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) 
 

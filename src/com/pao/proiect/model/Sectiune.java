@@ -6,6 +6,14 @@ public class Sectiune {
   public String nume;
   public int ratingVarsta;
 
+  public String getNume() {
+    return nume;
+  }
+
+  public int getRatingVarsta() {
+    return ratingVarsta;
+  }
+
   public Sectiune(String nume, int ratingVarsta) {
     this.nume = nume;
     if (ratingVarsta < 1 || ratingVarsta > 18) {
