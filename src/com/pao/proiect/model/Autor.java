@@ -7,6 +7,10 @@ public class Autor {
     this.numeComplet = numeComplet;
   }
 
+  public String getNumeComplet() {
+    return numeComplet;
+  }
+
   @Override
   public String toString() {
     return String.format(

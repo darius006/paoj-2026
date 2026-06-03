@@ -2,6 +2,7 @@ package com.pao.proiect;
 
 import java.util.Scanner;
 
+import com.pao.proiect.service.AuditService;
 import com.pao.proiect.service.*;
 import com.pao.proiect.exception.*;
 import com.pao.proiect.model.*;
@@ -41,6 +42,7 @@ public class Main {
   }
 
   public static void citireCarte(Scanner scanner) {
+    AuditService.getInstance().log("adauga_carte");
     CarteService cs = CarteService.getInstance();
     System.out.print("Introdu ISBN-ul cartii: ");
     ISBN isbn = safeIsbnRead(scanner);
@@ -52,7 +54,6 @@ public class Main {
     System.out.print("Introdu numele complet al autorului: ");
     String numeAutor = scanner.nextLine();
     Autor autor = new Autor(numeAutor);
-    scanner.nextLine();
     System.out.print("Introdu numele sectiunii: ");
     String numeSectiune = scanner.nextLine();
     System.out.print("Introdu rating-ul de varsta al sectiunii: ");
@@ -74,11 +75,13 @@ public class Main {
   }
 
   public static void listareCartiAlfabetic() {
+    AuditService.getInstance().log("listare_carti");
     CarteService cs = CarteService.getInstance();
     cs.listCarte();
   }
 
   public static void adaugaCititor(Scanner scanner) {
+    AuditService.getInstance().log("adauga_cititor");
     CititorService cs = CititorService.getInstance();
     System.out.print("Introdu email-ul cititorului: ");
     String email = scanner.nextLine();
@@ -88,6 +91,7 @@ public class Main {
   }
 
   public static void imprumutaCarte(Scanner scanner) {
+    AuditService.getInstance().log("imprumuta_carte");
     CititorService cits = CititorService.getInstance();
     CarteService cars = CarteService.getInstance();
     System.out.print("Introdu ISBN-ul cartii: ");
@@ -118,16 +122,17 @@ public class Main {
     Imprumut imp = new Imprumut(isbn, email, data, null, predare);
 
     cits.imprumutaCarte(cititor, imp);
-    carte.setNrExemplare(carte.getNrExemplare() - 1);
+    int remaining = cars.adjustNrExemplare(isbn, -1);
     System.out.printf(
       "Nr exemplare ramase: %d\n",
-      cars.searchCarte(isbn).getNrExemplare()
+      remaining
     );
 
     System.out.println("Imprumut realizat!");
   }
 
   public static void returneazaCarte(Scanner scanner) {
+    AuditService.getInstance().log("returneaza_carte");
     CititorService cits = CititorService.getInstance();
     CarteService cars = CarteService.getInstance();
     System.out.print("Introdu ISBN-ul cartii: ");
@@ -160,16 +165,17 @@ public class Main {
       return;
     }
 
-    carte.setNrExemplare(carte.getNrExemplare() + 1);
+    int remaining = cars.adjustNrExemplare(isbn, 1);
     System.out.printf(
       "Nr exemplare ramase: %d\n",
-      cars.searchCarte(isbn).getNrExemplare()
+      remaining
     );
 
     System.out.println("Retur realizat!");
   }
 
   public static void adaugaReview(Scanner scanner) {
+    AuditService.getInstance().log("adauga_review");
     CititorService cits = CititorService.getInstance();
     CarteService cars = CarteService.getInstance();
     System.out.print("Introdu ISBN-ul cartii: ");
@@ -204,6 +210,7 @@ public class Main {
   }
 
   public static void listReviews(Scanner scanner) {
+    AuditService.getInstance().log("list_reviews");
     CititorService cits = CititorService.getInstance();
     System.out.print("Introdu email-ul cititorului: ");
     String email = scanner.nextLine();
@@ -216,6 +223,7 @@ public class Main {
   }
 
   public static void afiseazaIntarzieri(Scanner scanner) {
+    AuditService.getInstance().log("afiseaza_intarzieri");
     CititorService cits = CititorService.getInstance();
     System.out.print("Introdu email-ul cititorului: ");
     String email = scanner.nextLine();
@@ -228,6 +236,7 @@ public class Main {
   }
 
   public static void meanReview(Scanner scanner) {
+    AuditService.getInstance().log("mean_review");
     CarteService cars = CarteService.getInstance();
     System.out.print("Introdu ISBN-ul cartii: ");
     ISBN isbn = safeIsbnRead(scanner);
@@ -241,6 +250,7 @@ public class Main {
   }
 
   public static void adaugaAngajat(Scanner scanner) {
+    AuditService.getInstance().log("adauga_angajat");
     AngajatService as = AngajatService.getInstance();
     System.out.print("Introdu tipul angajatului (b/pr): ");
     String tip = scanner.nextLine();
@@ -278,6 +288,7 @@ public class Main {
   }
 
   public static void afisareAngajati() {
+    AuditService.getInstance().log("list_angajati");
     AngajatService as = AngajatService.getInstance();
     as.listAngajat();
   }

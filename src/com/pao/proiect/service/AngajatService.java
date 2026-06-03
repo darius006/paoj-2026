@@ -1,9 +1,14 @@
 package com.pao.proiect.service;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
-import com.pao.proiect.model.*;
+import com.pao.proiect.model.Angajat;
+import com.pao.proiect.model.Bibliotecar;
+import com.pao.proiect.model.PersonalRaft;
+import com.pao.proiect.repository.AngajatRaftRepository;
+import com.pao.proiect.repository.BibliotecarRepository;
 
 public class AngajatService {
   private static final AngajatService instance = new AngajatService();
@@ -14,33 +19,64 @@ public class AngajatService {
     return instance;
   }
 
-  
-  private List<Angajat> angajati = new ArrayList<Angajat>();
+  private final BibliotecarRepository bibliotecarRepository = new BibliotecarRepository();
+  private final AngajatRaftRepository personalRaftRepository = new AngajatRaftRepository();
 
   public void addAngajat(Angajat c) {
-    angajati.add(c);
+    try {
+      if (c instanceof Bibliotecar bibliotecar) {
+        bibliotecarRepository.save(bibliotecar);
+      } else if (c instanceof PersonalRaft personalRaft) {
+        personalRaftRepository.save(personalRaft);
+      } else {
+        throw new IllegalArgumentException("Tip de angajat neacceptat: " + c.getClass().getName());
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public void removeCarte(int id) {
-    for (int i = 0; i < angajati.size(); ++i) {
-      if (angajati.get(i).getIdAngajat() == id) {
-        angajati.remove(i);
+    try {
+      Optional<Bibliotecar> bibliotecar = bibliotecarRepository.findById(id);
+      if (bibliotecar.isPresent()) {
+        bibliotecarRepository.delete(id);
+        return;
       }
+      Optional<PersonalRaft> personalRaft = personalRaftRepository.findById(id);
+      if (personalRaft.isPresent()) {
+        personalRaftRepository.delete(id);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
   }
 
   public Angajat searchAngajat(int id) {
-    for (Angajat c : angajati) {
-      if (c.getIdAngajat() == id) {
-        return c;
+    try {
+      Optional<Bibliotecar> bibliotecar = bibliotecarRepository.findById(id);
+      if (bibliotecar.isPresent()) {
+        return bibliotecar.get();
       }
+      Optional<PersonalRaft> personalRaft = personalRaftRepository.findById(id);
+      return personalRaft.orElse(null);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
-    return null;
   }
 
   public void listAngajat() {
-    for (Angajat c : angajati) {
-      System.out.println(c);
+    try {
+      List<Bibliotecar> bibliotecari = bibliotecarRepository.findAll();
+      for (Bibliotecar bibliotecar : bibliotecari) {
+        System.out.println(bibliotecar);
+      }
+      List<PersonalRaft> personalRafti = personalRaftRepository.findAll();
+      for (PersonalRaft personalRaft : personalRafti) {
+        System.out.println(personalRaft);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
   }
 }

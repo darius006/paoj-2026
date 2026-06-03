@@ -4,5 +4,9 @@
         "lib/**/*.jar",
         "c:\\Users\\dariu\\Documents\\mysql-connector-j-9.7.0\\mysql-connector-j-9.7.0\\mysql-connector-j-9.7.0.jar",
         "c:\\Users\\dariu\\Downloads\\sqlite-jdbc-3.53.1.0.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src",
+        "resources"
     ]
 }

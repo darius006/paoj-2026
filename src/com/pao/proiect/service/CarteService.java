@@ -1,13 +1,15 @@
 package com.pao.proiect.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pao.proiect.model.*;
-
-import java.util.HashMap;
-import java.util.Collections;
+import com.pao.proiect.model.Carte;
+import com.pao.proiect.model.ISBN;
+import com.pao.proiect.model.Review;
+import com.pao.proiect.repository.CarteRepository;
 
 public class CarteService {
   private static final CarteService instance = new CarteService();
@@ -18,35 +20,40 @@ public class CarteService {
     return instance;
   }
 
-  private List<Carte> carti = new ArrayList<Carte>();
-  private Map<Carte, List<Review>> reviews = new HashMap<Carte, List<Review>>();
+  private final CarteRepository carteRepository = new CarteRepository();
+  private final Map<Carte, List<Review>> reviews = new HashMap<Carte, List<Review>>();
 
   public void addCarte(Carte c) {
-    carti.add(c);
+    try {
+      carteRepository.save(c);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public void removeCarte(ISBN isbn) {
-    for (int i = 0; i < carti.size(); ++i) {
-      if (carti.get(i).getIsbn() == isbn) {
-        carti.remove(i);
-      }
+    try {
+      carteRepository.delete(isbn.toString());
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
   }
 
   public Carte searchCarte(ISBN isbn) {
-    for (Carte c : carti) {
-      if (c.getIsbn().equals(isbn)) {
-        return c;
-      }
+    try {
+      return carteRepository.findById(isbn.toString()).orElse(null);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
-    return null;
   }
 
   public void listCarte() {
-    List<Carte> copie = new ArrayList<Carte>(carti);
-    Collections.sort(copie);
-    for (Carte c : copie) {
-      System.out.println(c);
+    try {
+      for (Carte c : carteRepository.findAll()) {
+        System.out.println(c);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -57,12 +64,28 @@ public class CarteService {
 
   public float meanReview(Carte carte) {
     reviews.putIfAbsent(carte, new ArrayList<Review>());
-    float sum = 0;
     List<Review> lr = reviews.get(carte);
+    if (lr.isEmpty()) {
+      return 0;
+    }
+    float sum = 0;
     for (Review r : lr) {
       sum += r.getNrStele();
     }
-    sum /= (float)lr.size();
-    return sum;
+    return sum / (float) lr.size();
+  }
+
+  public int adjustNrExemplare(ISBN isbn, int delta) {
+    Carte carte = searchCarte(isbn);
+    if (carte == null) {
+      throw new IllegalArgumentException("Carte inexistenta: " + isbn);
+    }
+    carte.setNrExemplare(carte.getNrExemplare() + delta);
+    try {
+      carteRepository.update(carte);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return carte.getNrExemplare();
   }
 }
